@@ -1,5 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class GeoLocatorService {
+  Future<Position> getLocation() async {
+    Position position =
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+    return position;
+  }
+}
 
 void main() {
   runApp(AppMain());
@@ -256,29 +266,23 @@ class PageMainState extends State<PageMain> {
               ),
               ListTile(
                 tileColor: Colors.white,
-                title: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top:8, bottom:4),
-                      child: Text('날씨', style: TextStyle(fontSize: 20),),
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(top:4, bottom:8),
-                        child: Column(
+                title: Container(
+                    padding: EdgeInsets.only(top:4, bottom:8),
+                    height: 100,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.wb_cloudy, size: 40,),
-                                Text(' 6˚', style: TextStyle(fontSize: 40),),
-                              ],
-                            ),
-                            Text('청송읍', style: TextStyle(fontSize: 24)),
-                            Text('업데이트 1/14 오후 3:41', style: TextStyle(fontSize: 16))
+                            Icon(Icons.wb_cloudy, size: 32,),
+                            Text(' 6˚', style: TextStyle(fontSize: 32),),
                           ],
-                        )
-                    ),
-                  ],
+                        ),
+                        Text('청송읍', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text('업데이트 1/14 오후 3:41', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                      ],
+                    )
                 ),
               ),
               /*
@@ -434,6 +438,9 @@ class PageMainState extends State<PageMain> {
             padding: EdgeInsets.only(top:24, left:24, right:24),
             child: FlatButton(
               height: 50,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16)
+              ),
               color: Colors.deepOrangeAccent,
               child: Text('모두 보기', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
               onPressed: () {},
@@ -464,40 +471,50 @@ class PageMainState extends State<PageMain> {
           Container(
               padding: EdgeInsets.only(top:24,left:24,right:24),
               height: 320,
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text('2021년 1학기 농촌출신 대학생 학자금 융자사업 안내', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd 농정과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('보건의료원 의료진 변경 안내', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('2021년 경북농민사관학교 교육생 모집', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('소상공인 버팀목 자금 신청 안내', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('건강진단서 (구.보건증), 공무원채용신체검사 업무재개 안내', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('2021년 귀농 농업창업 및 주택구입지원사업', style: TextStyle(fontWeight: FontWeight.bold),),
-                    subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
-                    onTap: () {},
-                  ),
-                ],
-              )
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: ListView(
+
+                  children: [
+                    ListTile(
+                      tileColor: Colors.deepOrange[100],
+                      title: Text('2021년 1학기 농촌출신 대학생 학자금 융자사업 안내', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd 농정과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      tileColor: Colors.deepOrange[200],
+                      title: Text('보건의료원 의료진 변경 안내', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      tileColor: Colors.deepOrange[100],
+                      title: Text('2021년 경북농민사관학교 교육생 모집', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      tileColor: Colors.deepOrange[200],
+                      title: Text('소상공인 버팀목 자금 신청 안내', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      tileColor: Colors.deepOrange[100],
+                      title: Text('건강진단서 (구.보건증), 공무원채용신체검사 업무재개 안내', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      tileColor: Colors.deepOrange[200],
+                      title: Text('2021년 귀농 농업창업 및 주택구입지원사업', style: TextStyle(fontWeight: FontWeight.bold),),
+                      subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
+                      onTap: () {},
+                    ),
+                  ],
+                )
+              ),
           ),
           Container(
             padding: EdgeInsets.only(top:24,left:24),
@@ -511,6 +528,20 @@ class PageMainState extends State<PageMain> {
                   C5Unit('https://file.namu.moe/file/8bc9e381797334eb33da66e3ba501be1561d6497ce243896b5afdb175956a8afef569b95a78a25e2e262951992c7267d', '송이버섯', '신선한 송이는 익히지 않은 상태에서도 특유의 진한 소나무향을 느낄 수 있습니다.'),
                 ],
               )
+          ),
+          Container(
+            padding: EdgeInsets.only(top:24,left:24),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  37.785834,
+                  -122.406417,
+                ),
+                zoom: 18,
+              ),
+            ),
           ),
           Container(
             color: Color.fromRGBO(248, 248, 248, 1),
