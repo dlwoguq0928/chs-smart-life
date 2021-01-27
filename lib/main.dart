@@ -1,15 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:cheongsong/units.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-class GeoLocatorService {
-  Future<Position> getLocation() async {
-    Position position =
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    return position;
-  }
-}
+import 'package:geolocator/geolocator.dart';
 
 void main() {
   runApp(AppMain());
@@ -41,170 +36,23 @@ class PageMain extends StatefulWidget {
 
 class PageMainState extends State<PageMain> {
 
-  C1Unit(imgsrc, txt)
-  {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left:8, right:8),
-            child: CircleAvatar(
-              radius: 56,
-              backgroundImage: NetworkImage(imgsrc,),
-            ),
-          ),
-          Text(txt, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100),),
-        ],
-      ),
-      onPressed: () {},
-    );
+  Position currentPosition;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPosition();
   }
 
-  C2Unit(imgsrc, txt)
-  {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 64,
-            margin: EdgeInsets.only(left:8, right:8),
-            child: Image.asset(imgsrc),
-          ),
-          Text(txt, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-        ],
-      ),
-      onPressed: () {},
-    );
+  Future<void> getPosition() async {
+    var _currentPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+    setState(() {
+      currentPosition = _currentPosition;
+    });
+    print(_currentPosition);
   }
 
-  C3Unit(imgsrc, txt)
-  {
-    return GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(left:4, right:4),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16.0),
-          child: Stack(
-            children: [
-              Image.network(
-                imgsrc,
-                fit: BoxFit.fill,
-                width: 140.0,
-                height: 160.0,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.white30,Colors.white54])),
-                alignment: Alignment.bottomLeft,
-                width: 140.0,
-                height: 160.0,
-                child: Container(
-                    margin:EdgeInsets.all(8),
-                    child: Text(txt,style: TextStyle(fontSize: 18,color: Colors.deepOrange),)
-                ),
-              )
-            ],
-          )
-        ),
-      ),
-      onTap: () {},
-    );
-  }
-
-  C4Unit(imgsrc, header, subtxt)
-  {
-    return GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(left:4, right:4),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Stack(
-              children: [
-                Image.network(
-                  imgsrc,
-                  fit: BoxFit.fill,
-                  width: 200.0,
-                  height: 150.0,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.transparent,Colors.black54])),
-                  alignment: Alignment.bottomLeft,
-                  width: 200.0,
-                  height: 150.0,
-                  child: Container(
-                      margin:EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(header,style: TextStyle(fontSize: 18,color: Colors.white),),
-                          Text(subtxt,style: TextStyle(fontSize: 14,color: Colors.white, fontWeight: FontWeight.w100),)
-                        ],
-                      )
-                  ),
-                )
-              ],
-            )
-        ),
-      ),
-      onTap: () {},
-    );
-  }
-
-  C5Unit(imgsrc, header, subtxt)
-  {
-    return GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: Stack(
-              children: [
-                Image.network(
-                  imgsrc,
-                  fit: BoxFit.fill,
-                  height: 320.0,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.black45,Colors.transparent])),
-                  alignment: Alignment.bottomLeft,
-                  height: 320.0,
-                  child: Container(
-                      margin:EdgeInsets.all(32),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(header,style: TextStyle(fontSize: 24,color: Colors.white),),
-                          Text(subtxt,style: TextStyle(fontSize: 16,color: Colors.white, fontWeight: FontWeight.w100),)
-                        ],
-                      )
-                  ),
-                )
-              ],
-            )
-        ),
-      ),
-      onTap: () {},
-    );
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,85 +133,66 @@ class PageMainState extends State<PageMain> {
                     )
                 ),
               ),
-              /*
-              Padding(padding: EdgeInsets.all(4),),
               ListTile(
-                  tileColor: Colors.white,
-                  title: Container(
-                      height: 128,
-                      margin: EdgeInsets.only(left:16, right:16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text('이재협', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-                                Text('청송읍', style: TextStyle(fontSize: 20,),),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage: NetworkImage('https://avatars3.githubusercontent.com/u/31565895?s=460&u=2a2d1ce30b992853256ed62a179cc24abb6fa6dc&v=4'),
-                            ),
-                          ),
-                        ],
-                      )
-                  )
+                tileColor: Colors.white,
+                title: FlatButton(
+                  padding: EdgeInsets.all(4),
+                  height: 64,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('친구 찾기', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text('>', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                  onPressed: () {},
+                ),
               ),
-              Padding(padding: EdgeInsets.all(4),),
-              Column(
-                children: [
-                  ListTile(
-                      tileColor: Colors.white,
-                      title: Container(
-                          margin: EdgeInsets.only(left:16, right:16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('공지사항',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                              Icon(Icons.arrow_forward_ios, size: 16,),
-                            ],
-                          )
-                      )
+              ListTile(
+                tileColor: Colors.white,
+                title: FlatButton(
+                  padding: EdgeInsets.all(4),
+                  height: 64,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('자유게시판', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text('>', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    ],
                   ),
-                  Padding(padding: EdgeInsets.all(1),),
-                  ListTile(
-                      tileColor: Colors.white,
-                      title: Container(
-                          margin: EdgeInsets.only(left:16, right:16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('자주 묻는 질문',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                              Icon(Icons.arrow_forward_ios, size: 16,),
-                            ],
-                          )
-                      )
-                  ),
-                  Padding(padding: EdgeInsets.all(1),),
-                  ListTile(
-                      tileColor: Colors.white,
-                      title: Container(
-                          margin: EdgeInsets.only(left:16, right:16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('고객센터',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                              Icon(Icons.arrow_forward_ios, size: 16,),
-                            ],
-                          )
-                      )
-                  ),
-                ],
+                  onPressed: () {},
+                ),
               ),
-               */
+              ListTile(
+                tileColor: Colors.white,
+                title: FlatButton(
+                  padding: EdgeInsets.all(4),
+                  height: 64,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('우리 마을 장터', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text('>', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+              ListTile(
+                tileColor: Colors.white,
+                title: FlatButton(
+                  padding: EdgeInsets.all(4),
+                  height: 64,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('광고 게시판', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text('>', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ),
@@ -399,7 +228,7 @@ class PageMainState extends State<PageMain> {
           ),
           Container(
             padding: EdgeInsets.only(top:24,left:24),
-            child: Text('즐거운 식사 시간', style: TextStyle(fontSize: 20),),
+            child: Text('편의 시설', style: TextStyle(fontSize: 20),),
           ),
           Container(
             padding: EdgeInsets.only(top:16, left:16, right:16),
@@ -477,37 +306,37 @@ class PageMainState extends State<PageMain> {
 
                   children: [
                     ListTile(
-                      tileColor: Colors.deepOrange[100],
+                      tileColor: Colors.grey[100],
                       title: Text('2021년 1학기 농촌출신 대학생 학자금 융자사업 안내', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd 농정과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
                     ),
                     ListTile(
-                      tileColor: Colors.deepOrange[200],
+                      tileColor: Colors.grey[200],
                       title: Text('보건의료원 의료진 변경 안내', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
                     ),
                     ListTile(
-                      tileColor: Colors.deepOrange[100],
+                      tileColor: Colors.grey[100],
                       title: Text('2021년 경북농민사관학교 교육생 모집', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
                     ),
                     ListTile(
-                      tileColor: Colors.deepOrange[200],
+                      tileColor: Colors.grey[200],
                       title: Text('소상공인 버팀목 자금 신청 안내', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
                     ),
                     ListTile(
-                      tileColor: Colors.deepOrange[100],
+                      tileColor: Colors.grey[100],
                       title: Text('건강진단서 (구.보건증), 공무원채용신체검사 업무재개 안내', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
                     ),
                     ListTile(
-                      tileColor: Colors.deepOrange[200],
+                      tileColor: Colors.grey[200],
                       title: Text('2021년 귀농 농업창업 및 주택구입지원사업', style: TextStyle(fontWeight: FontWeight.bold),),
                       subtitle: Text('yyyy-mm-dd OO과', style: TextStyle(fontSize: 14),),
                       onTap: () {},
@@ -530,18 +359,12 @@ class PageMainState extends State<PageMain> {
               )
           ),
           Container(
-            padding: EdgeInsets.only(top:24,left:24),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                  37.785834,
-                  -122.406417,
-                ),
-                zoom: 18,
-              ),
-            ),
+              width: MediaQuery.of(context).size.width,
+              height:MediaQuery.of(context).size.width,
+              child: GoogleMap(initialCameraPosition: CameraPosition(
+                target:  LatLng(currentPosition != null ? currentPosition.latitude : 0, currentPosition != null ? currentPosition.longitude : 0),
+                zoom:18,
+              ))
           ),
           Container(
             color: Color.fromRGBO(248, 248, 248, 1),
