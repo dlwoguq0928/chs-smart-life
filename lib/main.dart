@@ -236,10 +236,10 @@ class PageMainState extends State<PageMain> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                C2Unit('assets/img/c2-1.png', '카페·편의점'),
-                C2Unit('assets/img/c2-2.png', '식당'),
-                C2Unit('assets/img/c2-3.png', '마트'),
-                C2Unit('assets/img/c2-4.png', '배달'),
+                C2Unit('https://cdn.pixabay.com/photo/2020/06/21/15/55/cup-of-coffee-5325613_1280.jpg', '카페·편의점'),
+                C2Unit('https://cdn.pixabay.com/photo/2020/01/29/07/46/bossam-4801728_960_720.jpg', '식당'),
+                C2Unit('https://cdn.pixabay.com/photo/2016/03/06/13/04/if-the-1240330_1280.jpg', '마트'),
+                C2Unit('https://cdn.pixabay.com/photo/2017/06/26/13/58/chicken-2443901_1280.jpg', '배달'),
               ],
             )
           ),
@@ -270,7 +270,7 @@ class PageMainState extends State<PageMain> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16)
               ),
-              color: Colors.deepOrangeAccent,
+              color: Colors.lightBlue,
               child: Text('모두 보기', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
               onPressed: () {},
             )
@@ -347,7 +347,7 @@ class PageMainState extends State<PageMain> {
           ),
           Container(
             padding: EdgeInsets.only(top:24,left:24),
-            child: Text('농특산물 구매', style: TextStyle(fontSize: 20),),
+            child: Text('농특산물', style: TextStyle(fontSize: 20),),
           ),
           Container(
               padding: EdgeInsets.only(top:24,left:24,right:24),
@@ -360,7 +360,7 @@ class PageMainState extends State<PageMain> {
           ),
           Container(
             padding: EdgeInsets.only(top:24,left:24),
-            child: Text('현재 위치', style: TextStyle(fontSize: 20),),
+            child: Text('내 현재 위치', style: TextStyle(fontSize: 20),),
           ),
           Container(
               padding: EdgeInsets.only(top:24,left:24,right:24),

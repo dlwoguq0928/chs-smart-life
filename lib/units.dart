@@ -16,7 +16,8 @@ C1Unit(imgsrc, txt)
             backgroundImage: NetworkImage(imgsrc,),
           ),
         ),
-        Text(txt, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100),),
+        Padding(padding: EdgeInsets.all(4)),
+        Text(txt, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ],
     ),
     onPressed: () {},
@@ -31,10 +32,14 @@ C2Unit(imgsrc, txt)
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        
         Container(
+          width: 80,
           height: 64,
-          margin: EdgeInsets.only(left:8, right:8),
-          child: Image.asset(imgsrc),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.network(imgsrc,fit:BoxFit.cover),
+          ),
         ),
         Text(txt, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ],
@@ -69,7 +74,7 @@ C3Unit(imgsrc, txt)
                 height: 160.0,
                 child: Container(
                     margin:EdgeInsets.all(8),
-                    child: Text(txt,style: TextStyle(fontSize: 18,color: Colors.deepOrange),)
+                    child: Text(txt,style: TextStyle(fontSize: 18,color: Colors.green),)
                 ),
               )
             ],
