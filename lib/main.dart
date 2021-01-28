@@ -359,12 +359,19 @@ class PageMainState extends State<PageMain> {
               )
           ),
           Container(
+            padding: EdgeInsets.only(top:24,left:24),
+            child: Text('현재 위치', style: TextStyle(fontSize: 20),),
+          ),
+          Container(
+              padding: EdgeInsets.only(top:24,left:24,right:24),
               width: MediaQuery.of(context).size.width,
               height:MediaQuery.of(context).size.width,
-              child: GoogleMap(initialCameraPosition: CameraPosition(
-                target:  LatLng(currentPosition != null ? currentPosition.latitude : 0, currentPosition != null ? currentPosition.longitude : 0),
-                zoom:18,
-              ))
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: GoogleMap(initialCameraPosition: CameraPosition(
+                  target:  LatLng(currentPosition != null ? currentPosition.latitude : 0, currentPosition != null ? currentPosition.longitude : 0),
+                  zoom:18,
+                )))
           ),
           Container(
             color: Color.fromRGBO(248, 248, 248, 1),
